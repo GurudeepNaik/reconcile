@@ -6,6 +6,8 @@ Stripe says $48,210 came in this month. The ERP says $47,960. Finance wants to k
 make up the $250 before they close the books. Most teams answer that with a spreadsheet and an
 afternoon. `reconcile` answers it in a second, and proves the answer adds up.
 
+**Live demo: [reconcile-demo-ecru.vercel.app](https://reconcile-demo-ecru.vercel.app)** — click "Run the demo". Free tier: the first request after a quiet spell takes a few seconds.
+
 ![Dashboard](docs/dashboard.png)
 
 ## What it does
@@ -84,6 +86,8 @@ greedily, best first; a candidate is only accepted if it beats every free rival 
 - `ruff`, `mypy --strict` and the full suite run in CI.
 
 ## Quick start
+
+Deploy your own copy to Vercel (one FastAPI function + Neon Postgres): `scripts/deploy-vercel.sh`.
 
 ```bash
 docker compose up --build        # http://localhost:8080 → "Run the demo"
