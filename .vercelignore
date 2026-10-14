@@ -1,0 +1,7 @@
+backend/.venv
+backend/tests
+**/node_modules
+**/.pnpm-store
+**/__pycache__
+*.db
+docs

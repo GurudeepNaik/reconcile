@@ -12,3 +12,6 @@ demo-data/
 .env
 .DS_Store
 *.tsbuildinfo
+.vercel
+.env*
+public/

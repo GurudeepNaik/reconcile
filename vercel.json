@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": null,
+  "outputDirectory": null,
+  "buildCommand": "echo 'public/ (the dashboard) is built before upload by scripts/deploy-vercel.sh'",
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{frontend/**,docs/**,backend/tests/**,backend/.venv/**,.github/**}"
+    }
+  }
+}
