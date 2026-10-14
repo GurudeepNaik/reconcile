@@ -89,6 +89,13 @@ greedily, best first; a candidate is only accepted if it beats every free rival 
 docker compose up --build        # http://localhost:8080 → "Run the demo"
 ```
 
+Dev mode (source mounted, API auto-reload, Vite hot reload, Postgres on `localhost:5434`):
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+# API http://localhost:8000/docs · dashboard http://localhost:5173
+```
+
 Or locally:
 
 ```bash

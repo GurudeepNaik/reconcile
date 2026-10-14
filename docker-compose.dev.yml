@@ -1,0 +1,30 @@
+# Dev mode: source mounted, API auto-reload, Vite hot reload, Postgres on a local port.
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+# API http://localhost:8000/docs · dashboard http://localhost:5173 · Postgres localhost:5434
+services:
+  db:
+    ports: !override ["5434:5432"]
+
+  api:
+    command: ["/app/.venv/bin/uvicorn", "reconcile.api:create_app", "--factory", "--reload",
+              "--reload-dir", "/app/src", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      RECONCILE_CORS_ORIGINS: '["http://localhost:5173"]'
+    ports: !override ["8000:8000"]
+    volumes:
+      - ./backend/src:/app/src
+
+  web:
+    build: !reset null
+    image: node:24-alpine
+    working_dir: /app
+    command: ["sh", "-c", "corepack enable && pnpm install --frozen-lockfile && pnpm dev --host 0.0.0.0 --port 5173"]
+    environment:
+      API_URL: http://api:8000
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+      npm_config_store_dir: /pnpm-store
+      VITE_USE_POLLING: "true"
+    ports: !override ["5173:5173"]
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
