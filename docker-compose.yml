@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: reconcile
+      POSTGRES_USER: reconcile
+      POSTGRES_PASSWORD: reconcile
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reconcile"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    environment:
+      RECONCILE_DATABASE_URL: postgresql+psycopg://reconcile:reconcile@db:5432/reconcile
+      RECONCILE_CORS_ORIGINS: '["http://localhost:8080"]'
+    depends_on:
+      db: { condition: service_healthy }
+
+  web:
+    build: ./frontend
+    ports: ["8080:80"]
+    depends_on: [api]
+
+volumes:
+  pgdata:
